@@ -1,0 +1,1355 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "LunaJoy | Server",
+    "version": "2.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {}
+  },
+  "paths": {
+    "/auth/status": {
+      "get": {
+        "operationId": "checkAuth",
+        "summary": "Check auth",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Check auth to the application",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isAuthenticated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isAuthenticated"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "post": {
+        "summary": "Google Sign In / Sign Up",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "idToken"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "refreshToken",
+        "summary": "Refresh token",
+        "tags": [
+          "Auth"
+        ],
+        "description": "Refresh the access and refresh tokens",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "refreshToken"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/daily-log/anxiety": {
+      "post": {
+        "summary": "Add anxiety level to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "anxietyLevelInformed": {
+                    "type": "string",
+                    "enum": [
+                      "CALM",
+                      "SLIGHTLY_ANXIOUS",
+                      "MODERATE",
+                      "HIGH",
+                      "OVERWHELMED"
+                    ]
+                  }
+                },
+                "required": [
+                  "anxietyLevelInformed"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/symptoms": {
+      "post": {
+        "summary": "Add symptom to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "symptomType": {
+                    "type": "string",
+                    "enum": [
+                      "SADNESS",
+                      "FATIGUE",
+                      "IRRITABILITY",
+                      "LACK_OF_FOCUS",
+                      "ANXIETY",
+                      "INSOMNIA",
+                      "LOSS_OF_INTEREST",
+                      "RESTLESSNESS"
+                    ]
+                  },
+                  "symptomSeverity": {
+                    "type": "string",
+                    "enum": [
+                      "MILD",
+                      "MODERATE",
+                      "SEVERE"
+                    ]
+                  },
+                  "symptomsDescription": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "symptomType",
+                  "symptomSeverity",
+                  "symptomsDescription"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/mood": {
+      "post": {
+        "summary": "Add mood to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mood": {
+                    "type": "string",
+                    "enum": [
+                      "VERY_SAD",
+                      "SAD",
+                      "NEUTRAL",
+                      "HAPPY",
+                      "VERY_HAPPY"
+                    ]
+                  }
+                },
+                "required": [
+                  "mood"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/physical-activity": {
+      "post": {
+        "summary": "Add physical activity to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "durationInMinutes": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "activityType": {
+                    "type": "string",
+                    "enum": [
+                      "WALKING",
+                      "RUNNING",
+                      "CYCLING",
+                      "SWIMMING",
+                      "YOGA",
+                      "OTHER"
+                    ]
+                  },
+                  "intensity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MODERATE",
+                      "HIGH"
+                    ]
+                  },
+                  "satisfactionLevel": {
+                    "type": "string",
+                    "enum": [
+                      "VERY_DISSATISFIED",
+                      "DISSATISFIED",
+                      "NEUTRAL",
+                      "SATISFIED",
+                      "VERY_SATISFIED"
+                    ]
+                  }
+                },
+                "required": [
+                  "durationInMinutes",
+                  "activityType",
+                  "intensity",
+                  "satisfactionLevel"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/sleep": {
+      "post": {
+        "summary": "Add sleep pattern to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sleepDurationInHours": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 24
+                  },
+                  "sleepQualityRating": {
+                    "type": "string",
+                    "enum": [
+                      "VERY_POOR",
+                      "POOR",
+                      "AVERAGE",
+                      "GOOD",
+                      "EXCELLENT"
+                    ]
+                  },
+                  "disturbances": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "sleepDurationInHours",
+                  "sleepQualityRating"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/social": {
+      "post": {
+        "summary": "Add social interaction to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "interactionType": {
+                    "type": "string",
+                    "enum": [
+                      "FAMILY",
+                      "FRIENDS",
+                      "COLLEAGUES",
+                      "STRANGERS",
+                      "WORK",
+                      "SHOPPING",
+                      "OTHER"
+                    ]
+                  },
+                  "satisfactionLevel": {
+                    "type": "string",
+                    "enum": [
+                      "VERY_DISSATISFIED",
+                      "DISSATISFIED",
+                      "NEUTRAL",
+                      "SATISFIED",
+                      "VERY_SATISFIED"
+                    ]
+                  },
+                  "duration": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "interactionType",
+                  "satisfactionLevel",
+                  "duration"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/stress": {
+      "post": {
+        "summary": "Add stress level to daily log",
+        "tags": [
+          "Daily Log"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "stressLevelType": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MODERATE",
+                      "HIGH",
+                      "EXTREME"
+                    ]
+                  },
+                  "duration": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "situationDescription": {
+                    "type": "string"
+                  },
+                  "stressSource": {
+                    "type": "string",
+                    "enum": [
+                      "WORK",
+                      "FAMILY",
+                      "HEALTH",
+                      "FINANCES",
+                      "RELATIONSHIPS",
+                      "OTHER"
+                    ]
+                  }
+                },
+                "required": [
+                  "stressLevelType",
+                  "duration"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/daily-log/{id}": {
+      "get": {
+        "summary": "List daily logs by ID",
+        "tags": [
+          "Daily Log"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "nullable": true,
+                  "type": "object",
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "moodRating": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "mood": {
+                          "type": "string",
+                          "enum": [
+                            "VERY_SAD",
+                            "SAD",
+                            "NEUTRAL",
+                            "HAPPY",
+                            "VERY_HAPPY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "mood"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "anxietyLevel": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "anxietyLevelInformed": {
+                          "type": "string",
+                          "enum": [
+                            "CALM",
+                            "SLIGHTLY_ANXIOUS",
+                            "MODERATE",
+                            "HIGH",
+                            "OVERWHELMED"
+                          ]
+                        },
+                        "anxietyLevelCalculated": {
+                          "type": "string",
+                          "enum": [
+                            "CALM",
+                            "SLIGHTLY_ANXIOUS",
+                            "MODERATE",
+                            "HIGH",
+                            "OVERWHELMED"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "anxietyLevelInformed",
+                        "anxietyLevelCalculated"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "sleepPattern": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "sleepDurationInHours": {
+                          "type": "number"
+                        },
+                        "sleepQualityRating": {
+                          "type": "string",
+                          "enum": [
+                            "VERY_POOR",
+                            "POOR",
+                            "AVERAGE",
+                            "GOOD",
+                            "EXCELLENT"
+                          ]
+                        },
+                        "disturbances": {
+                          "nullable": true,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "sleepDurationInHours",
+                        "sleepQualityRating",
+                        "disturbances"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "physicalActivity": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "durationInMinutes": {
+                            "type": "number"
+                          },
+                          "activityType": {
+                            "type": "string",
+                            "enum": [
+                              "WALKING",
+                              "RUNNING",
+                              "CYCLING",
+                              "SWIMMING",
+                              "YOGA",
+                              "OTHER"
+                            ]
+                          },
+                          "intensity": {
+                            "type": "string",
+                            "enum": [
+                              "LOW",
+                              "MODERATE",
+                              "HIGH"
+                            ]
+                          },
+                          "satisfactionLevel": {
+                            "type": "string",
+                            "enum": [
+                              "VERY_DISSATISFIED",
+                              "DISSATISFIED",
+                              "NEUTRAL",
+                              "SATISFIED",
+                              "VERY_SATISFIED"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "durationInMinutes",
+                          "activityType",
+                          "intensity",
+                          "satisfactionLevel"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "socialInteraction": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "interactionType": {
+                            "type": "string",
+                            "enum": [
+                              "FAMILY",
+                              "FRIENDS",
+                              "COLLEAGUES",
+                              "STRANGERS",
+                              "WORK",
+                              "SHOPPING",
+                              "OTHER"
+                            ]
+                          },
+                          "satisfactionLevel": {
+                            "type": "string",
+                            "enum": [
+                              "VERY_DISSATISFIED",
+                              "DISSATISFIED",
+                              "NEUTRAL",
+                              "SATISFIED",
+                              "VERY_SATISFIED"
+                            ]
+                          },
+                          "duration": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "interactionType",
+                          "satisfactionLevel",
+                          "duration"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stressLevel": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "stressLevelType": {
+                          "type": "string",
+                          "enum": [
+                            "LOW",
+                            "MODERATE",
+                            "HIGH",
+                            "EXTREME"
+                          ]
+                        },
+                        "duration": {
+                          "type": "number"
+                        },
+                        "situationDescription": {
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "stressSource": {
+                          "nullable": true,
+                          "type": "string",
+                          "enum": [
+                            "WORK",
+                            "FAMILY",
+                            "HEALTH",
+                            "FINANCES",
+                            "RELATIONSHIPS",
+                            "OTHER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "stressLevelType",
+                        "duration",
+                        "situationDescription",
+                        "stressSource"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "symptoms": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "symptomType": {
+                            "type": "string",
+                            "enum": [
+                              "SADNESS",
+                              "FATIGUE",
+                              "IRRITABILITY",
+                              "LACK_OF_FOCUS",
+                              "ANXIETY",
+                              "INSOMNIA",
+                              "LOSS_OF_INTEREST",
+                              "RESTLESSNESS"
+                            ]
+                          },
+                          "symptomSeverity": {
+                            "type": "string",
+                            "enum": [
+                              "MILD",
+                              "MODERATE",
+                              "SEVERE"
+                            ]
+                          },
+                          "symptomsDescription": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "symptomType",
+                          "symptomSeverity",
+                          "symptomsDescription"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "score": {
+                      "nullable": true,
+                      "type": "number"
+                    },
+                    "insights": {
+                      "nullable": true
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "date",
+                    "moodRating",
+                    "anxietyLevel",
+                    "sleepPattern",
+                    "physicalActivity",
+                    "socialInteraction",
+                    "stressLevel",
+                    "symptoms",
+                    "score",
+                    "insights",
+                    "createdAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/daily-log/list": {
+      "get": {
+        "summary": "List daily logs by period",
+        "tags": [
+          "Daily Log"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "startDate",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endDate",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "nullable": true,
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "moodRating": {
+                        "nullable": true,
+                        "type": "object",
+                        "properties": {
+                          "mood": {
+                            "type": "string",
+                            "enum": [
+                              "VERY_SAD",
+                              "SAD",
+                              "NEUTRAL",
+                              "HAPPY",
+                              "VERY_HAPPY"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "mood"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "anxietyLevel": {
+                        "nullable": true,
+                        "type": "object",
+                        "properties": {
+                          "anxietyLevelInformed": {
+                            "type": "string",
+                            "enum": [
+                              "CALM",
+                              "SLIGHTLY_ANXIOUS",
+                              "MODERATE",
+                              "HIGH",
+                              "OVERWHELMED"
+                            ]
+                          },
+                          "anxietyLevelCalculated": {
+                            "type": "string",
+                            "enum": [
+                              "CALM",
+                              "SLIGHTLY_ANXIOUS",
+                              "MODERATE",
+                              "HIGH",
+                              "OVERWHELMED"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "anxietyLevelInformed",
+                          "anxietyLevelCalculated"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "sleepPattern": {
+                        "nullable": true,
+                        "type": "object",
+                        "properties": {
+                          "sleepDurationInHours": {
+                            "type": "number"
+                          },
+                          "sleepQualityRating": {
+                            "type": "string",
+                            "enum": [
+                              "VERY_POOR",
+                              "POOR",
+                              "AVERAGE",
+                              "GOOD",
+                              "EXCELLENT"
+                            ]
+                          },
+                          "disturbances": {
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "sleepDurationInHours",
+                          "sleepQualityRating",
+                          "disturbances"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "physicalActivity": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "durationInMinutes": {
+                              "type": "number"
+                            },
+                            "activityType": {
+                              "type": "string",
+                              "enum": [
+                                "WALKING",
+                                "RUNNING",
+                                "CYCLING",
+                                "SWIMMING",
+                                "YOGA",
+                                "OTHER"
+                              ]
+                            },
+                            "intensity": {
+                              "type": "string",
+                              "enum": [
+                                "LOW",
+                                "MODERATE",
+                                "HIGH"
+                              ]
+                            },
+                            "satisfactionLevel": {
+                              "type": "string",
+                              "enum": [
+                                "VERY_DISSATISFIED",
+                                "DISSATISFIED",
+                                "NEUTRAL",
+                                "SATISFIED",
+                                "VERY_SATISFIED"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "durationInMinutes",
+                            "activityType",
+                            "intensity",
+                            "satisfactionLevel"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "socialInteraction": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "interactionType": {
+                              "type": "string",
+                              "enum": [
+                                "FAMILY",
+                                "FRIENDS",
+                                "COLLEAGUES",
+                                "STRANGERS",
+                                "WORK",
+                                "SHOPPING",
+                                "OTHER"
+                              ]
+                            },
+                            "satisfactionLevel": {
+                              "type": "string",
+                              "enum": [
+                                "VERY_DISSATISFIED",
+                                "DISSATISFIED",
+                                "NEUTRAL",
+                                "SATISFIED",
+                                "VERY_SATISFIED"
+                              ]
+                            },
+                            "duration": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "interactionType",
+                            "satisfactionLevel",
+                            "duration"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "stressLevel": {
+                        "nullable": true,
+                        "type": "object",
+                        "properties": {
+                          "stressLevelType": {
+                            "type": "string",
+                            "enum": [
+                              "LOW",
+                              "MODERATE",
+                              "HIGH",
+                              "EXTREME"
+                            ]
+                          },
+                          "duration": {
+                            "type": "number"
+                          },
+                          "situationDescription": {
+                            "nullable": true,
+                            "type": "string"
+                          },
+                          "stressSource": {
+                            "nullable": true,
+                            "type": "string",
+                            "enum": [
+                              "WORK",
+                              "FAMILY",
+                              "HEALTH",
+                              "FINANCES",
+                              "RELATIONSHIPS",
+                              "OTHER"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "stressLevelType",
+                          "duration",
+                          "situationDescription",
+                          "stressSource"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "symptoms": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "symptomType": {
+                              "type": "string",
+                              "enum": [
+                                "SADNESS",
+                                "FATIGUE",
+                                "IRRITABILITY",
+                                "LACK_OF_FOCUS",
+                                "ANXIETY",
+                                "INSOMNIA",
+                                "LOSS_OF_INTEREST",
+                                "RESTLESSNESS"
+                              ]
+                            },
+                            "symptomSeverity": {
+                              "type": "string",
+                              "enum": [
+                                "MILD",
+                                "MODERATE",
+                                "SEVERE"
+                              ]
+                            },
+                            "symptomsDescription": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "symptomType",
+                            "symptomSeverity",
+                            "symptomsDescription"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "score": {
+                        "nullable": true,
+                        "type": "number"
+                      },
+                      "insights": {
+                        "nullable": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "date",
+                      "moodRating",
+                      "anxietyLevel",
+                      "sleepPattern",
+                      "physicalActivity",
+                      "socialInteraction",
+                      "stressLevel",
+                      "symptoms",
+                      "score",
+                      "insights",
+                      "createdAt"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "operationId": "getAuthenticatedUser",
+        "summary": "Get authenticated user",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "mail": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "mail"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Soft delete a user",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyGroupId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "companyGroupId"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "deletedAt": {
+                      "nullable": true,
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "deletedAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateUser",
+        "summary": "Update a user's data",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
